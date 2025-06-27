@@ -37,3 +37,4 @@ Rocc.framework.zip
 
 # Swift Package Manager
 .build
+/.DS_Store
