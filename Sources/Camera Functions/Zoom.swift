@@ -9,10 +9,10 @@
 import Foundation
 
 /// Functions for controlling the digital zoom of a camera
-public struct Zoom: CameraFunction {
+public struct Zoom: CameraFunction, @unchecked Sendable {
     
     /// Functions for controlling the zoom setting of a camera
-    public struct Settings: CameraFunction {
+    public struct Settings: CameraFunction , @unchecked Sendable{
         
         public var function: _CameraFunction
         

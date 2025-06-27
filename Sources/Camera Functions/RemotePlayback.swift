@@ -9,10 +9,10 @@
 import Foundation
 
 /// Functions for working with the remote playback capabilities of a camera
-public struct RemotePlayback: CameraFunction {
+public struct RemotePlayback: CameraFunction, @unchecked Sendable {
     
     /// Functions for configuring the remote playback position of an item
-    public struct Position: CameraFunction {
+    public struct Position: CameraFunction, @unchecked Sendable {
         
         public var function: _CameraFunction
         
@@ -25,7 +25,7 @@ public struct RemotePlayback: CameraFunction {
     }
     
     /// Functions for getting the status of a remote playback session
-    public struct Status: CameraFunction {
+    public struct Status: CameraFunction, @unchecked Sendable {
         
         public struct Value: Equatable {
             
@@ -45,7 +45,7 @@ public struct RemotePlayback: CameraFunction {
     }
     
     /// Functions for interacting with the content that is being streamed via remote playback
-    public struct Content: CameraFunction {
+    public struct Content: CameraFunction, @unchecked Sendable {
         
         public var function: _CameraFunction
         

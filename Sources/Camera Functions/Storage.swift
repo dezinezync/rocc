@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for interacting with the storage of the camera
-public struct Storage: CameraFunction {
+public struct Storage: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

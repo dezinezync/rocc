@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SessionDelegate {
+protocol SessionDelegate: Sendable {
     
     //MARK: - Download Delegate -
     
@@ -30,7 +30,7 @@ protocol SessionDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
 }
 
-class SessionDelegateProxy: NSObject, URLSessionDownloadDelegate, URLSessionTaskDelegate {
+final class SessionDelegateProxy: NSObject, URLSessionDownloadDelegate, URLSessionTaskDelegate {
     
     let delegate: SessionDelegate
     

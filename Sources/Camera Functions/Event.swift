@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for interacting with the event API on the camera
-public struct Event: CameraFunction {
+public struct Event: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for configuring the "scene" selection for shooting
-public struct Scene: CameraFunction {
+public struct Scene: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

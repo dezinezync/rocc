@@ -53,6 +53,7 @@ final class PTPIPClient {
         guid = camera.identifier.replacingOccurrences(of: "uuid", with: "").components(separatedBy: CharacterSet.alphanumerics.inverted).joined()
         // Trim GUID to 16 characters
         guid = String(guid.suffix(16))
+
         self.packetStream.delegate = self
     }
     
@@ -82,7 +83,8 @@ final class PTPIPClient {
     var onDisconnect: (() -> Void)?
     
     #if canImport(UIKit)
-    var deviceName: String = UIDevice.current.name
+  // @FIXME: UIDevice must be accessed from the main actor
+    var deviceName: String = UUID().uuidString// UIDevice.current.name
     #elseif canImport(AppKit)
     var deviceName: String = Host.current().name ?? UUID().uuidString
     #else
@@ -306,7 +308,7 @@ extension PTPIPClient: PTPPacketStreamDelegate {
     }
     
     func packetStreamDidOpenControlStream(_ stream: PTPPacketStream) {
-        self.sendInitCommandRequest()
+      self.sendInitCommandRequest()
     }
     
     func packetStreamDidOpenEventStream(_ stream: PTPPacketStream) {

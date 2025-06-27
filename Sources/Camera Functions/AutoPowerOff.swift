@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for configuring the duration of the auto-power off function of the camera.
-public struct AutoPowerOff: CameraFunction {
+public struct AutoPowerOff: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

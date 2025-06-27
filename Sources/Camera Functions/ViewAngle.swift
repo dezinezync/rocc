@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for configuring the view angle of the camera, mainly used for action cams!
-public struct ViewAngle: CameraFunction {
+public struct ViewAngle: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

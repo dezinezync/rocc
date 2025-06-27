@@ -36,7 +36,7 @@ public struct ShutterSpeed: Equatable {
     }
     
     /// A statically available constant for BULB shutter speed
-    public static let bulb: ShutterSpeed = ShutterSpeed(numerator: -1.0, denominator: -1.0)
+    nonisolated(unsafe) public static let bulb: ShutterSpeed = ShutterSpeed(numerator: -1.0, denominator: -1.0)
     
     /// Returns whether the given shutter speed is a BULB shutter speed
     public var isBulb: Bool {
@@ -74,10 +74,10 @@ public class ShutterSpeedFormatter {
         public let rawValue: Int
         
         /// Whether to append quotes for shutter speeds over 1 second
-        static let appendQuotes = FormattingOptions(rawValue: 1 << 0)
+      nonisolated(unsafe) static let appendQuotes = FormattingOptions(rawValue: 1 << 0)
         
         /// Whether integers should be formatted with decimal places included
-        static let forceIntegersToDouble = FormattingOptions(rawValue: 2 << 0)
+      nonisolated(unsafe) static let forceIntegersToDouble = FormattingOptions(rawValue: 2 << 0)
     
         public init(rawValue: Int) {
             self.rawValue = rawValue

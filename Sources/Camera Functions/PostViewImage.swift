@@ -12,7 +12,7 @@ import Foundation
 public struct PostViewImage {
     
     /// Functions for configuring the size of post-view image the camera sends
-    public struct Size: CameraFunction {
+    public struct Size: CameraFunction, @unchecked Sendable {
         
         public var function: _CameraFunction
         

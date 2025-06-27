@@ -12,7 +12,7 @@ import Foundation
 public struct Flash {
     
     /// Functions for configuring the exposure mode of the camera
-    public struct Mode: CameraFunction {
+    public struct Mode: CameraFunction, @unchecked Sendable {
         
         public enum Value {
             case fill

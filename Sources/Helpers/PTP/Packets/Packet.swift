@@ -82,7 +82,7 @@ struct Packet: Packetable {
     
     let unparsedData: ByteBuffer
     
-    private static let nameToType: [Packet.Name : Packetable.Type] = [
+    nonisolated(unsafe) private static let nameToType: [Packet.Name : Packetable.Type] = [
         .initCommandAck: InitCommandAckPacket.self,
         .cmdResponse: CommandResponsePacket.self,
         .startDataPacket: StartDataPacket.self,

@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for controlling the Aperture (F Stop) of the camera
-public struct Aperture: CameraFunction {
+public struct Aperture: CameraFunction, @unchecked Sendable {
     
     public struct Value {
                         

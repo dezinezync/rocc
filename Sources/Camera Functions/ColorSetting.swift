@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for interacting with the color setting of the camera
-public struct ColorSetting: CameraFunction {
+public struct ColorSetting: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

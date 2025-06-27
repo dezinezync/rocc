@@ -25,11 +25,11 @@ extension Double {
 }
 
 internal extension FileRequest {
-    static let sonyDefault = FileRequest(uri: "storage:memoryCard1", startIndex: 0, count: 50, view: .flat, sort: nil, types: nil)
+  nonisolated(unsafe) static let sonyDefault = FileRequest(uri: "storage:memoryCard1", startIndex: 0, count: 50, view: .flat, sort: nil, types: nil)
 }
 
 fileprivate extension CountRequest {
-    static let sonyDefault = CountRequest(uri: "storage:memoryCard1", view: .flat, target: "all", types: nil)
+  nonisolated(unsafe) static let sonyDefault = CountRequest(uri: "storage:memoryCard1", view: .flat, target: "all", types: nil)
 }
 
 internal final class SonyAPICameraDevice: SonyCamera {

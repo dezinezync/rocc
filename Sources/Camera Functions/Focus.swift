@@ -12,7 +12,7 @@ import Foundation
 public struct Focus {
     
     /// Functions for controlling the focus mode of the camera
-    public struct Mode: CameraFunction {
+    public struct Mode: CameraFunction, @unchecked Sendable {
         
         public enum Value: CaseIterable {
             

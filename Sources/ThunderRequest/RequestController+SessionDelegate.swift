@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension RequestController: SessionDelegate {
+extension RequestController: SessionDelegate, @unchecked Sendable {
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         callTransferCompletionHandlersFor(taskIdentifier: downloadTask.taskIdentifier, downloadedFileURL: location, error: nil, response: downloadTask.response)

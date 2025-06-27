@@ -9,7 +9,7 @@
 import Foundation
 
 /// A function to ping the camera to see if it is accessible
-struct Ping: CameraFunction {
+struct Ping: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

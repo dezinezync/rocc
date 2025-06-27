@@ -12,7 +12,7 @@ import Foundation
 /// An option to be added to an `ErrorRecoveryAttempter`.
 /// when the attempter presents the alert on screen to the user,
 /// each one of the options will be displayed as a selectable button
-public struct ErrorRecoveryOption {
+public struct ErrorRecoveryOption: @unchecked Sendable {
     
     /// The styles available for the action
     ///

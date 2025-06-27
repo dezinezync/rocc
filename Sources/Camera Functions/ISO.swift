@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for controlling the ISO of the camera
-public struct ISO: CameraFunction {
+public struct ISO: CameraFunction, @unchecked Sendable {
     
     public enum Value: Equatable {
         

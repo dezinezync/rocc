@@ -9,11 +9,11 @@
 import Foundation
 
 /// Functions for interacting with the exposure settings of the camera
-public struct Exposure {
+public struct Exposure: @unchecked Sendable {
     
     /// Functions for locking in exposure settings, this seems to only be used for HFR shooting
     /// via PTP/IP on the RX100 VII, but may have other use-cases and therefore we've made it more generic for now.
-    public struct SettingsLock: CameraFunction {
+    public struct SettingsLock: CameraFunction, @unchecked Sendable {
         
         public enum Status: CaseIterable {
             case normal
@@ -35,10 +35,10 @@ public struct Exposure {
     }
     
     /// Functions for configuring the exposure mode of the camera
-    public struct Mode: CameraFunction {
+    public struct Mode: CameraFunction, @unchecked Sendable {
         
         /// Functions for configuring what controls the exposure mode dial on the camera
-        public struct DialControl: CameraFunction {
+        public struct DialControl: CameraFunction, @unchecked Sendable {
             
             public var function: _CameraFunction
             
@@ -113,7 +113,7 @@ public struct Exposure {
     }
     
     /// Functions for configuring the exposure compensation of the camera
-    public struct Compensation: CameraFunction {
+    public struct Compensation: CameraFunction, @unchecked Sendable {
         
         /// A exposure compensation value
         public struct Value: Equatable {

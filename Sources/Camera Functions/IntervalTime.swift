@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for configuring the shooting interval of the camera
-public struct IntervalTime: CameraFunction {
+public struct IntervalTime: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

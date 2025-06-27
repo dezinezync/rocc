@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for controlling the TV output color system
-public struct TVColorSystem: CameraFunction {
+public struct TVColorSystem: CameraFunction, @unchecked Sendable {
         
     public typealias ReturnType = String
     

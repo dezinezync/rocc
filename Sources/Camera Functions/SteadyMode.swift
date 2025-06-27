@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for configuring the steady mode of the camera
-public struct SteadyMode: CameraFunction {
+public struct SteadyMode: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for configuring the wind noise reduction setting of a camera
-public struct WindNoiseReduction: CameraFunction {
+public struct WindNoiseReduction: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

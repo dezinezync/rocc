@@ -133,32 +133,32 @@ public final class LiveViewStream: NSObject {
     private let log = OSLog(subsystem: "com.yellow-brick-bear.rocc", category: "LiveViewStreaming")
     
     /// The delegate which will have live stream updates passed to it
-    public var delegate: LiveViewStreamDelegate?
+  nonisolated(unsafe) public var delegate: LiveViewStreamDelegate?
     
     /// The camera who's live view is being streamed
-    public let camera: Camera
+  nonisolated(unsafe) public let camera: Camera
     
     /// Whether the stream is currently running
-    public var isStreaming: Bool = false
+  nonisolated(unsafe) public var isStreaming: Bool = false
     
     /// Whether the stream is currently starting
-    public var isStarting: Bool = false
+  nonisolated(unsafe) public var isStarting: Bool = false
     
     /// The size of the stream (M/L)
-    public var streamSize: String?
+  nonisolated(unsafe) public var streamSize: String?
     
     /// The maximum size the data buffer should be allowed to reach
     /// before being cleared out. This means that for unparsable streams
     /// we won't cause out of memory crashes
     ///
     /// - Note: This defaults to 10Mb
-    public var bufferSize: Int = 10_485_760
+  nonisolated(unsafe) public var bufferSize: Int = 10_485_760
     
     /// Used to make sure overflown buffer only logged once
-    private var hasLoggedOverflowBuffer: Bool = false
+  nonisolated(unsafe) private var hasLoggedOverflowBuffer: Bool = false
     
     /// The data that has been received from the stream
-    internal var receivedData: Data = Data()
+  nonisolated(unsafe) internal var receivedData: Data = Data()
     
     /// Creates a new stream object for the given camera
     ///
@@ -172,7 +172,7 @@ public final class LiveViewStream: NSObject {
         self.dataProcessingQueue.qualityOfService = .utility
     }
     
-    private var eventTimer: Timer?
+  nonisolated(unsafe) private var eventTimer: Timer?
     
     /// Performs all setup of the live view stream and begins streaming images over the network
     public func start() {
@@ -232,11 +232,11 @@ public final class LiveViewStream: NSObject {
         }
     }
     
-    private var streamingSession: URLSession?
+  nonisolated(unsafe) private var streamingSession: URLSession?
     
-    private var dataTask: URLSessionDataTask?
+  nonisolated(unsafe) private var dataTask: URLSessionDataTask?
     
-    var isPacketedStream: Bool = false
+  nonisolated(unsafe) var isPacketedStream: Bool = false
     
     let dataProcessingQueue = OperationQueue()
         

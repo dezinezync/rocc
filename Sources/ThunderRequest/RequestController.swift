@@ -24,7 +24,7 @@ internal typealias ProgressHandler = (_ progress: Double, _ totalBytes: Int64, _
 /// 3. Use any of the GET/POST e.t.c. methods to perform requests
 ///
 /// IMPORTANT --- `RequestController` uses URLSession internally which hold a strong reference to their delegate. You must therefore call `invalidateAndCancel` when done with your `RequestController` object.
-internal class RequestController {
+internal final class RequestController {
     
     internal enum UploadError: Error {
         case saveToDiskFailed
@@ -32,7 +32,7 @@ internal class RequestController {
     }
     
     /// A shared user agent which will be used for all instances of `RequestController`
-    internal class var sharedUserAgent: String? {
+    nonisolated(unsafe) internal class var sharedUserAgent: String? {
         get {
             return UserDefaults.standard.string(forKey: "TSCUserAgent")
         }
@@ -42,7 +42,7 @@ internal class RequestController {
     }
     
     /// The user agent to use with this instance of `RequestController` overrides `RequestController.sharedUserAgent`
-    internal var userAgent: String?
+    nonisolated(unsafe) internal var userAgent: String?
     
     /// The shared Base URL for all requests routed through the controller
     ///
@@ -232,7 +232,7 @@ internal class RequestController {
     ///   - headers: (Optional) a dictionary of override headers to be merged with `sharedRequestHeaders`
     ///   - completion: (Optional) A closure to be called once the request has completed
     /// - Returns: The request object that will be run
-    @discardableResult open func request(
+    @discardableResult func request(
         _ path: String?,
         method: HTTP.Method,
         body: RequestBody? = nil,

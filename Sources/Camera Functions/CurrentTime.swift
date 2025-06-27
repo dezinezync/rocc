@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for interacting with the time of the camera
-public struct CurrentTime: CameraFunction {
+public struct CurrentTime: CameraFunction, @unchecked Sendable {
     
     public struct Value: Equatable {
         

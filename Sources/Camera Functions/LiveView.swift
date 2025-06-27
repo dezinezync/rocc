@@ -9,10 +9,10 @@
 import Foundation
 
 /// Functions for interacting with the live view of the camera
-public struct LiveView: CameraFunction {
+public struct LiveView: CameraFunction, @unchecked Sendable {
     
     /// Functions for configuring whether frame info (focus areas, faces e.t.c) should be sent from the camera
-    struct SendFrameInfo: CameraFunction {
+    struct SendFrameInfo: CameraFunction, @unchecked Sendable {
         
         public var function: _CameraFunction
         
@@ -28,7 +28,7 @@ public struct LiveView: CameraFunction {
     }
     
     /// Functions for configuring the image quality of the live view stream
-    public struct QualityGet: CameraFunction {
+    public struct QualityGet: CameraFunction, @unchecked Sendable {
         
         public var function: _CameraFunction
         
@@ -41,7 +41,7 @@ public struct LiveView: CameraFunction {
         public static let get = QualityGet(function: .getLiveViewQuality)
     }
     
-    public struct QualitySet: CameraFunction {
+    public struct QualitySet: CameraFunction, @unchecked Sendable {
         
         public var function: _CameraFunction
         

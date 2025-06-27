@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for configuring the flip setting (?) of the camera
-public struct FlipSetting: CameraFunction {
+public struct FlipSetting: CameraFunction, @unchecked Sendable {
         
     public typealias ReturnType = String
     

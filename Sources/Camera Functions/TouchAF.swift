@@ -10,7 +10,7 @@ import CoreGraphics
 import Foundation
 
 /// Functions for interacting with the Touch AF capability of a camera
-public struct TouchAF: CameraFunction {
+public struct TouchAF: CameraFunction, @unchecked Sendable {
     
     /// Structural representation of information about the Touch AF setup
     public struct Information: Equatable {
@@ -23,7 +23,7 @@ public struct TouchAF: CameraFunction {
     }
     
     /// Functions for interacting with the position of Touch AF points
-    public struct Position: CameraFunction {
+    public struct Position: CameraFunction, @unchecked Sendable {
         
         public var function: _CameraFunction
         

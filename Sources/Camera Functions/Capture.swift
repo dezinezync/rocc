@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for interacting with the camera's still capture API.
-public struct StillCapture: CameraFunction {
+public struct StillCapture: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     
@@ -21,7 +21,7 @@ public struct StillCapture: CameraFunction {
     public static let take = StillCapture(function: .takePicture)
     
     /// Functions for configuring the still capture size setting
-    public struct Size: CameraFunction {
+    public struct Size: CameraFunction, @unchecked Sendable {
         
         /// A structural representation of still image size configuration
         public struct Value: Equatable {
@@ -47,7 +47,7 @@ public struct StillCapture: CameraFunction {
     }
     
     /// Functions for configuring the still capture quality setting
-    public struct Quality: CameraFunction {
+    public struct Quality: CameraFunction, @unchecked Sendable {
         
         /// A structural representation of image still quality
         public enum Value: CaseIterable {
@@ -70,7 +70,7 @@ public struct StillCapture: CameraFunction {
     }
     
     /// Functions for configuring the still capture format setting
-    public struct Format: CameraFunction {
+    public struct Format: CameraFunction, @unchecked Sendable {
         
         /// A structural representation of image still format
         public enum Value: Equatable {
@@ -96,7 +96,7 @@ public struct StillCapture: CameraFunction {
 }
 
 /// Functions to control the duration of the camera's self timer function.
-public struct SelfTimerDuration: CameraFunction {
+public struct SelfTimerDuration: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     
@@ -112,7 +112,7 @@ public struct SelfTimerDuration: CameraFunction {
 }
 
 /// Functions for interacting with the camera's audio capture API
-public struct AudioCapture: CameraFunction {
+public struct AudioCapture: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     
@@ -145,7 +145,7 @@ public struct CaptureBracket: Equatable {
     }
 }
 
-public struct ContinuousBracketCapture: CameraFunction {
+public struct ContinuousBracketCapture: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     
@@ -159,7 +159,7 @@ public struct ContinuousBracketCapture: CameraFunction {
     /// Ends capture of bracketed stills
     public static let stop = ContinuousBracketCapture(function: .stopContinuousBracketShooting)
     
-    public struct Bracket: CameraFunction {
+    public struct Bracket: CameraFunction, @unchecked Sendable {
         
         public struct Value: Equatable {
             
@@ -199,7 +199,7 @@ public struct ContinuousBracketCapture: CameraFunction {
     }
 }
 
-public struct SingleBracketCapture: CameraFunction {
+public struct SingleBracketCapture: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     
@@ -210,7 +210,7 @@ public struct SingleBracketCapture: CameraFunction {
     public static let take = SingleBracketCapture(function: .takeSingleBracketShot)
     
     /// Functions for interacting with the bracketed shooting mode
-    public struct Bracket: CameraFunction {
+    public struct Bracket: CameraFunction, @unchecked Sendable {
         
         public struct Value: Equatable {
             
@@ -251,7 +251,7 @@ public struct SingleBracketCapture: CameraFunction {
 }
 
 /// Functions for interacting with the camera's continuous capture API
-public struct ContinuousCapture: CameraFunction {
+public struct ContinuousCapture: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     
@@ -268,7 +268,7 @@ public struct ContinuousCapture: CameraFunction {
     public static let stop = ContinuousCapture(function: .endContinuousShooting)
     
     /// Functions for interacting with the continuous shooting mode
-    public struct Mode: CameraFunction {
+    public struct Mode: CameraFunction, @unchecked Sendable {
         
         /// Enumeration representing the shooting mode which a camera is using
         ///
@@ -299,7 +299,7 @@ public struct ContinuousCapture: CameraFunction {
     }
     
     /// Functions for interacting with the continuous shooting speed
-    public struct Speed: CameraFunction {
+    public struct Speed: CameraFunction, @unchecked Sendable {
         
         /// Enumeration representing the shooting speed for continuous shooting
         ///
@@ -332,7 +332,7 @@ public struct ContinuousCapture: CameraFunction {
 }
 
 /// Functions for interacting with the camera's high frame rate API
-public struct HighFrameRateCapture: CameraFunction {
+public struct HighFrameRateCapture: CameraFunction, @unchecked Sendable {
     
     /// The current status of the HFR capture
     public enum Status {
@@ -352,10 +352,10 @@ public struct HighFrameRateCapture: CameraFunction {
 }
 
 /// Functions for interacting with the camera's video capture API
-public struct VideoCapture: CameraFunction {
+public struct VideoCapture: CameraFunction, @unchecked Sendable {
     
     /// Functions for controlling the file format that the video will be captured in
-    public struct FileFormat: CameraFunction {
+    public struct FileFormat: CameraFunction, @unchecked Sendable {
         
         /// Values for Video Capture file format
         public enum Value: Int, CaseIterable {
@@ -392,7 +392,7 @@ public struct VideoCapture: CameraFunction {
     }
     
     /// Functions for controlling the quality of video recording
-    public struct Quality: CameraFunction {
+    public struct Quality: CameraFunction, @unchecked Sendable {
         
         /// Values for Video Capture file quality
         public enum Value: CaseIterable {
@@ -494,7 +494,7 @@ public struct VideoCapture: CameraFunction {
     }
     
     /// Functions for controlling whether audio is captured along with video
-    public struct Audio: CameraFunction {
+    public struct Audio: CameraFunction, @unchecked Sendable {
         
         public var function: _CameraFunction
         
@@ -523,7 +523,7 @@ public struct VideoCapture: CameraFunction {
 }
 
 /// Functions for interacting with the camera's loop capture API
-public struct LoopCapture: CameraFunction {
+public struct LoopCapture: CameraFunction, @unchecked Sendable {
     
     /// Functions for changing the duration of a loop capture
     public struct Duration: CameraFunction {
@@ -555,7 +555,7 @@ public struct LoopCapture: CameraFunction {
 }
 
 /// Functions for interacting with the camera's bulb capture API
-public struct BulbCapture: CameraFunction {
+public struct BulbCapture: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

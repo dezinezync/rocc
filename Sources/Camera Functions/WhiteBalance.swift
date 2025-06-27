@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for configuring the camera's white balance
-public struct WhiteBalance: CameraFunction {
+public struct WhiteBalance: CameraFunction, @unchecked Sendable {
     
     /// An enumeration representing the white balance mode
     public enum Mode: CaseIterable {
@@ -66,7 +66,7 @@ public struct WhiteBalance: CameraFunction {
     public static let get = WhiteBalance(function: .getWhiteBalance)
     
     /// Functions to setup a custom white balance on the camera
-    public struct Custom: CameraFunction {
+    public struct Custom: CameraFunction, @unchecked Sendable {
         
         /// A structural representation of result of setting up a custom white balance from a capture
         public struct Result: Equatable {

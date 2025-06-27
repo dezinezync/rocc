@@ -10,10 +10,10 @@ import CoreGraphics
 import Foundation
 
 /// Functions for configuring tracking focus on the camera
-public struct TrackingFocus: CameraFunction {
+public struct TrackingFocus: CameraFunction, @unchecked Sendable {
     
     /// Functions for enabling and disabling tracking focus
-    public struct Setting: CameraFunction {
+    public struct Setting: CameraFunction, @unchecked Sendable {
         
         public var function: _CameraFunction
         

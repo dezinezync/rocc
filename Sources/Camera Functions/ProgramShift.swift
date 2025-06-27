@@ -9,7 +9,7 @@
 import Foundation
 
 /// Funcsions for configuring the program shift (Configuring aperture+shutter speed combination)
-public struct ProgramShift: CameraFunction {
+public struct ProgramShift: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

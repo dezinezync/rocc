@@ -202,7 +202,7 @@ public struct FileResponse: Equatable {
 public struct FileSystem {
     
     /// Functions for managing the file system
-    public struct Manage: CameraFunction {
+    public struct Manage: CameraFunction, @unchecked Sendable {
         
         public typealias ReturnType = Wrapper<Void>
         
@@ -215,7 +215,7 @@ public struct FileSystem {
     }
     
     /// Functions for listing sources available on the camera
-    public struct Sources: CameraFunction {
+    public struct Sources: CameraFunction, @unchecked Sendable {
         
         public typealias ReturnType = [String]
         
@@ -228,7 +228,7 @@ public struct FileSystem {
     }
     
     /// Functions for listing schemes available on the camera
-    public struct Schemes: CameraFunction {
+    public struct Schemes: CameraFunction, @unchecked Sendable {
         
         public typealias ReturnType = [String]
         
@@ -241,7 +241,7 @@ public struct FileSystem {
     }
     
     /// Functions for interacting with the file sytem's contents!
-    public struct Contents: CameraFunction {
+    public struct Contents: CameraFunction, @unchecked Sendable {
         
         public var function: _CameraFunction
         
@@ -253,7 +253,7 @@ public struct FileSystem {
         public static let list = Contents(function: .listContent)
         
         /// Functions for returning the count of a particular folder
-        public struct Count: CameraFunction {
+        public struct Count: CameraFunction, @unchecked Sendable {
             
             public var function: _CameraFunction
             

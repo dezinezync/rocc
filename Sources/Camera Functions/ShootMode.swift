@@ -37,7 +37,7 @@ public enum ShootingMode: String, CaseIterable {
 }
 
 /// Functions for configuring the shooting mode of the camera
-public struct ShootMode: CameraFunction {
+public struct ShootMode: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

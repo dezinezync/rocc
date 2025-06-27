@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for interacting with the IR remote control setting of the camera
-public struct InfraredRemoteControl: CameraFunction {
+public struct InfraredRemoteControl: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

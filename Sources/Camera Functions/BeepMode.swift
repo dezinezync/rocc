@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for configuring the beep mode of the camera
-public struct BeepMode: CameraFunction {
+public struct BeepMode: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

@@ -9,7 +9,7 @@
 import Foundation
 
 /// Functions for controlling the function of the camera (e.g. "Contents Transfer")
-public struct Function: CameraFunction {
+public struct Function: CameraFunction, @unchecked Sendable {
     
     public var function: _CameraFunction
     

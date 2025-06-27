@@ -34,7 +34,7 @@ public final class Logger {
         case fault
     }
     
-    public static var sharedLog: Log = FileLog.shared
+    nonisolated(unsafe) public static var sharedLog: Log = FileLog.shared
     
     internal init() {
         
@@ -56,7 +56,7 @@ public final class Logger {
 public final class FileLog: Log {
     
     /// Shared instance of the logger
-    public static let shared = FileLog()
+    nonisolated(unsafe) public static let shared = FileLog()
     
     /// Whether logs are currently being saved to a file
     public var isLoggingToFile: Bool {

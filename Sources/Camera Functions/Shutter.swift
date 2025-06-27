@@ -9,10 +9,10 @@
 import Foundation
 
 /// Functions for configuring shutter parameters on the camera
-public struct Shutter: CameraFunction {
+public struct Shutter: CameraFunction, @unchecked Sendable {
     
     /// Functions for configuring the shutter speed of the camera
-    public struct Speed: CameraFunction {
+    public struct Speed: CameraFunction, @unchecked Sendable {
         
         public var function: _CameraFunction
         
