@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal final class SonyTransferDevice {
+internal final class SonyTransferDevice: NSObject {
     
     fileprivate var pinger: Pinger?
     

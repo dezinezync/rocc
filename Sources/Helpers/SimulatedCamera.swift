@@ -96,7 +96,7 @@ extension File {
     }
 }
 
-public final class DummyCamera: Camera {
+public final class DummyCamera: NSObject, Camera {
     
     public var isInBeta: Bool {
         return false
@@ -202,10 +202,6 @@ public final class DummyCamera: Camera {
     public func disconnect(completion: @escaping DisconnectedCompletion) {
         isConnected = false
         completion(nil)
-    }
-    
-    public init() {
-        
     }
     
     public var isConnected: Bool = false

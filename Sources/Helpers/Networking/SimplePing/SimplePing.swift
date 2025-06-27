@@ -145,7 +145,7 @@ func in_cksum(_ buffer: UnsafePointer<UInt16>, bufferLen: size_t) -> UInt16 {
     return answer
 }
 
-protocol SimplePingDelegate: class {
+protocol SimplePingDelegate: NSObjectProtocol {
     
     /// A SimplePing delegate callback, called once the object has started up.
     ///

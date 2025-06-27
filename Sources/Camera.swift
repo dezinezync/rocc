@@ -84,7 +84,7 @@ public enum PollingMode {
 }
 
 /// A protocol which defines the base functionality of a camera.
-public protocol Camera: class {
+public protocol Camera: NSObjectProtocol {
     
     typealias ConnectedCompletion = (_ error: Error?, _ transferMode: Bool) -> Void
     

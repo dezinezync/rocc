@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal final class Pinger {
+internal final class Pinger: NSObject {
     
     typealias Completion = (_ time: TimeInterval?, _ error: Error?) -> Void
     

@@ -29,7 +29,7 @@ extension Array {
                 switch $0 {
                 case let optional as Optional<Any>:
                     switch optional {
-                    case .some(let value):
+                    case .some(_):
                         return !(($0 as? Container)?.isEmpty ?? false)
                     default:
                         return false

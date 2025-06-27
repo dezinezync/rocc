@@ -9,7 +9,7 @@
 import Foundation
 
 /// Common base class for all Sony cameras
-class SonyCamera {
+class SonyCamera: NSObject {
     
     let udn: String?
     

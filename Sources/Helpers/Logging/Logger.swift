@@ -115,7 +115,7 @@ public final class FileLog: Log {
             var writeString = message
             
             if !writeString.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                writeString = "\n\(formatter.string(from: Date())) [\(level.rawValue)] | \(subsystem) \(category) | \(writeString)"
+              writeString = "\n\(String(describing: self?.formatter.string(from: Date()))) [\(level.rawValue)] | \(subsystem) \(category) | \(writeString)"
             }
             
             if let handle = try? FileHandle(forWritingTo: fileURL) {
