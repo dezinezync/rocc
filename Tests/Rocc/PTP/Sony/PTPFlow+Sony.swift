@@ -10,14 +10,14 @@ import UIKit
 @testable import Rocc
 
 extension Bundle {
-    
-    static let current: Bundle = Bundle(for: TestPTPPacketStream.self)
-    
-    func ptpTestFlow(named: String) -> TestPTPPacketStream.TestFlow {
-        let fileUrl = url(forResource: named, withExtension: "json")!
-        let data = try! Data(contentsOf: fileUrl)
-        return try! JSONDecoder().decode(TestPTPPacketStream.TestFlow.self, from: data)
-    }
+  
+  static let current: Bundle = Bundle(for: TestPTPPacketStream.self)
+  
+  func ptpTestFlow(named: String) -> TestPTPPacketStream.TestFlow {
+    let fileUrl = url(forResource: named, withExtension: "json")!
+    let data = try! Data(contentsOf: fileUrl)
+    return try! JSONDecoder().decode(TestPTPPacketStream.TestFlow.self, from: data)
+  }
 }
 
 extension TestPTPPacketStream.TestFlow {

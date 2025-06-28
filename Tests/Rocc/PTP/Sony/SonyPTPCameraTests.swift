@@ -54,290 +54,289 @@ extension TestPTPPacketStream.TestFlow {
     }
 }
 
-class SonyPTPCameraTests: XCTestCase {
+class SonyPTPCameraTests: XCTestCase, @unchecked Sendable {
     
-    override func setUpWithError() throws {
-        camera.ptpIPClient = nil
-    }
-    
-    let camera = SonyPTPIPDevice(dictionary: [
-        "av:X_ScalarWebAPI_DeviceInfo": [
-            "av:X_ScalarWebAPI_ImagingDevice": [
-                "av:X_ScalarWebAPI_LiveView_URL": "192.168.0.1"
-            ]
-        ],
-        "UDN": TestPTPPacketStream.TestFlow.Sony.guid
-    ])!
+  override func setUpWithError() throws {
+    camera.ptpIPClient = nil
+  }
+  
+  let camera = SonyPTPIPDevice(dictionary: [
+    "av:X_ScalarWebAPI_DeviceInfo": [
+      "av:X_ScalarWebAPI_ImagingDevice": [
+        "av:X_ScalarWebAPI_LiveView_URL": "192.168.0.1"
+      ]
+    ],
+    "UDN": TestPTPPacketStream.TestFlow.Sony.guid
+  ])!
 
-    func testConnectionFlow() {
-                
-        let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
-        packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.connect
-        camera.ptpIPClient = PTPIPClient(
-            camera: camera,
-            packetStream: packetStream
-        )
-        camera.ptpIPClient?.deviceName = "iPhone Xs Max"
-        
-        let expectation = XCTestExpectation(description: "Connect to camera")
-        
-        camera.connect { (error, inTransferMode) in
-            XCTAssertNil(error)
-            XCTAssertFalse(inTransferMode)
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 10)
-        
-        XCTAssertEqual(
-            packetStream.packetsSentAndReceived,
-            packetStream.testFlow.packetsSentAndReceived
-        )
+  func testConnectionFlow() {
+    
+    let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
+    packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.connect
+    camera.ptpIPClient = PTPIPClient(
+      camera: camera,
+      packetStream: packetStream
+    )
+    camera.ptpIPClient?.deviceName = "iPhone Xs Max"
+    
+    let expectation = XCTestExpectation(description: "Connect to camera")
+    
+    camera.connect { (error, inTransferMode) in
+      XCTAssertNil(error)
+      XCTAssertFalse(inTransferMode)
+      expectation.fulfill()
     }
     
-    func testConnectionFlowOtherSessionOpenFirstSDIOConnect() {
-        let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
-        packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.connectAlreadyOpen
-        camera.ptpIPClient = PTPIPClient(
-            camera: camera,
-            packetStream: packetStream
-        )
-        camera.ptpIPClient?.deviceName = "iPhone Xs Max"
-        
-        let expectation = XCTestExpectation(description: "Connect to camera")
-        
-        camera.connect { (error, inTransferMode) in
-            XCTAssertNil(error)
-            XCTAssertFalse(inTransferMode)
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 10)
-        
-        XCTAssertEqual(
-            packetStream.packetsSentAndReceived,
-            packetStream.testFlow.packetsSentAndReceived
-        )
+    wait(for: [expectation], timeout: 10)
+    
+    XCTAssertEqual(
+      packetStream.packetsSentAndReceived,
+      packetStream.testFlow.packetsSentAndReceived
+    )
+  }
+  
+  func testConnectionFlowOtherSessionOpenFirstSDIOConnect() {
+    let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
+    packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.connectAlreadyOpen
+    camera.ptpIPClient = PTPIPClient(
+      camera: camera,
+      packetStream: packetStream
+    )
+    camera.ptpIPClient?.deviceName = "iPhone Xs Max"
+    
+    let expectation = XCTestExpectation(description: "Connect to camera")
+    
+    camera.connect { (error, inTransferMode) in
+      XCTAssertNil(error)
+      XCTAssertFalse(inTransferMode)
+      expectation.fulfill()
     }
     
-    func testEventFetchedCorrectlyWhenReceieveEventPacket() {
-        
-        let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
-        packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.getEvent
-        camera.ptpIPClient = PTPIPClient(
-            camera: camera,
-            packetStream: packetStream
-        )
-        camera.ptpIPClient?.deviceName = "iPhone Xs Max"
-        
-        let expectation = XCTestExpectation(description: "Get event")
-        
-        self.camera.onEventAvailable = {
-            self.camera.performFunction(Event.get, payload: nil) { (_, event) in
-                XCTAssertNotNil(event)
-                expectation.fulfill()
-            }
-        }
-        
-        camera.connect { (_, _) in
-            
-            
-        }
-                
-        packetStream.sendInitialPacketIfPresent()
-        
-        wait(for: [expectation], timeout: 10)
-                        
-        XCTAssertEqual(
-            packetStream.packetsSentAndReceived,
-            packetStream.testFlow.packetsSentAndReceived
-        )
+    wait(for: [expectation], timeout: 10)
+    
+    XCTAssertEqual(
+      packetStream.packetsSentAndReceived,
+      packetStream.testFlow.packetsSentAndReceived
+    )
+  }
+  
+  func testEventFetchedCorrectlyWhenReceieveEventPacket() {
+    
+    let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
+    packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.getEvent
+    camera.ptpIPClient = PTPIPClient(
+      camera: camera,
+      packetStream: packetStream
+    )
+    camera.ptpIPClient?.deviceName = "iPhone Xs Max"
+    
+    let expectation = XCTestExpectation(description: "Get event")
+    
+    self.camera.onEventAvailable = {
+      self.camera.performFunction(Event.get, payload: nil) { (_, event) in
+        XCTAssertNotNil(event)
+        expectation.fulfill()
+      }
     }
     
-    func testTakePicture() {
-        
-        let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
-        packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.takePicture
-        camera.ptpIPClient = PTPIPClient(
-            camera: camera,
-            packetStream: packetStream
-        )
-        camera.ptpIPClient?.deviceName = "iPhone Xs Max"
-        
-        let expectation = XCTestExpectation(description: "Take picture")
-        
-        self.camera.onEventAvailable = {
-            
-        }
-        
-        camera.connect { (_, _) in
-            
-            self.camera.performFunction(StillCapture.take, payload: nil) { (_, url) in
-                expectation.fulfill()
-            }
-        }
-                
-        packetStream.sendInitialPacketIfPresent()
-        
-        wait(for: [expectation], timeout: 10)
-                        
-        XCTAssertEqual(
-            packetStream.packetsSentAndReceived,
-            packetStream.testFlow.packetsSentAndReceived
-        )
+    camera.connect { (_, _) in
+      
+      
     }
     
-    func testSupportsFunctions() {
-        
-        let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
-        packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.functionSupport
-        camera.setupDummyDeviceInfo()
-        camera.ptpIPClient = PTPIPClient(
-            camera: camera,
-            packetStream: packetStream
-        )
-        camera.ptpIPClient?.deviceName = "iPhone Xs Max"
-        
-        let expectation = XCTestExpectation(description: "Get supports")
-        
-        camera.supportsFunction(Aperture.set) { (supported, error, supportedValues) in
-            
-            XCTAssertEqual(supported, true)
-            XCTAssertNil(error)
-            XCTAssertNotNil(supportedValues)
-            XCTAssertEqual(
-                supportedValues,
-                [
-                    .init(value: 2.8, decimalSeperator: nil),
-                    .init(value: 3.2, decimalSeperator: nil),
-                    .init(value: 3.5, decimalSeperator: nil),
-                    .init(value: 4.0, decimalSeperator: nil),
-                    .init(value: 4.5, decimalSeperator: nil),
-                    .init(value: 5.0, decimalSeperator: nil),
-                    .init(value: 5.6, decimalSeperator: nil),
-                    .init(value: 6.3, decimalSeperator: nil),
-                    .init(value: 7.1, decimalSeperator: nil),
-                    .init(value: 8.0, decimalSeperator: nil),
-                    .init(value: 9.0, decimalSeperator: nil),
-                    .init(value: 10.0, decimalSeperator: nil),
-                    .init(value: 11.0, decimalSeperator: nil)
-                ]
-            )
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 10)
-                        
-        XCTAssertEqual(
-            packetStream.packetsSentAndReceived,
-            packetStream.testFlow.packetsSentAndReceived
-        )
+    packetStream.sendInitialPacketIfPresent()
+    
+    wait(for: [expectation], timeout: 10)
+    
+    XCTAssertEqual(
+      packetStream.packetsSentAndReceived,
+      packetStream.testFlow.packetsSentAndReceived
+    )
+  }
+  
+  func testTakePicture() {
+    
+    let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
+    packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.takePicture
+    camera.ptpIPClient = PTPIPClient(
+      camera: camera,
+      packetStream: packetStream
+    )
+    camera.ptpIPClient?.deviceName = "iPhone Xs Max"
+    
+    let expectation = XCTestExpectation(description: "Take picture")
+    
+    self.camera.onEventAvailable = {
+      
     }
     
-    func testAvailableFunctions() {
-        
-        let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
-        packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.functionAvailability
-        camera.setupDummyDeviceInfo()
-        camera.ptpIPClient = PTPIPClient(
-            camera: camera,
-            packetStream: packetStream
-        )
-        camera.ptpIPClient?.deviceName = "iPhone Xs Max"
-        
-        let expectation = XCTestExpectation(description: "Get supports")
-        
-        camera.isFunctionAvailable(Aperture.set) { (available, error, supportedValues) in
-            
-            XCTAssertEqual(available, true)
-            XCTAssertNil(error)
-            XCTAssertNotNil(supportedValues)
-            XCTAssertEqual(
-                supportedValues,
-                [
-                    .init(value: 2.8, decimalSeperator: nil),
-                    .init(value: 3.2, decimalSeperator: nil),
-                    .init(value: 3.5, decimalSeperator: nil),
-                    .init(value: 4.0, decimalSeperator: nil),
-                    .init(value: 4.5, decimalSeperator: nil),
-                    .init(value: 5.0, decimalSeperator: nil),
-                    .init(value: 5.6, decimalSeperator: nil),
-                    .init(value: 6.3, decimalSeperator: nil),
-                    .init(value: 7.1, decimalSeperator: nil),
-                    .init(value: 8.0, decimalSeperator: nil),
-                    .init(value: 9.0, decimalSeperator: nil),
-                    .init(value: 10.0, decimalSeperator: nil),
-                    .init(value: 11.0, decimalSeperator: nil)
-                ]
-            )
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 10)
-                        
-        XCTAssertEqual(
-            packetStream.packetsSentAndReceived,
-            packetStream.testFlow.packetsSentAndReceived
-        )
+    camera.connect { (_, _) in
+      self.camera.performFunction(StillCapture.take, payload: nil) { error, url in
+        expectation.fulfill()
+      }
     }
     
-    func testGetFunction() {
-        
-        let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
-        packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.performGetFunction
-        camera.setupDummyDeviceInfo()
-        camera.ptpIPClient = PTPIPClient(
-            camera: camera,
-            packetStream: packetStream
-        )
-        camera.ptpIPClient?.deviceName = "iPhone Xs Max"
-        
-        let expectation = XCTestExpectation(description: "Get supports")
-        
-        camera.performFunction(Aperture.get, payload: nil) { (error, value) in
-            
-            XCTAssertNil(error)
-            XCTAssertNotNil(value)
-            XCTAssertEqual(
-                value,
-                .init(value: 2.8, decimalSeperator: nil)
-            )
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 10)
-                        
-        XCTAssertEqual(
-            packetStream.packetsSentAndReceived,
-            packetStream.testFlow.packetsSentAndReceived
-        )
+    packetStream.sendInitialPacketIfPresent()
+    
+    wait(for: [expectation], timeout: 10)
+    
+    XCTAssertEqual(
+      packetStream.packetsSentAndReceived,
+      packetStream.testFlow.packetsSentAndReceived
+    )
+  }
+  
+  func testSupportsFunctions() {
+    
+    let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
+    packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.functionSupport
+    camera.setupDummyDeviceInfo()
+    camera.ptpIPClient = PTPIPClient(
+      camera: camera,
+      packetStream: packetStream
+    )
+    camera.ptpIPClient?.deviceName = "iPhone Xs Max"
+    
+    let expectation = XCTestExpectation(description: "Get supports")
+    
+    camera.supportsFunction(Aperture.set) { (supported, error, supportedValues) in
+      
+      XCTAssertEqual(supported, true)
+      XCTAssertNil(error)
+      XCTAssertNotNil(supportedValues)
+      XCTAssertEqual(
+        supportedValues,
+        [
+          .init(value: 2.8, decimalSeperator: nil),
+          .init(value: 3.2, decimalSeperator: nil),
+          .init(value: 3.5, decimalSeperator: nil),
+          .init(value: 4.0, decimalSeperator: nil),
+          .init(value: 4.5, decimalSeperator: nil),
+          .init(value: 5.0, decimalSeperator: nil),
+          .init(value: 5.6, decimalSeperator: nil),
+          .init(value: 6.3, decimalSeperator: nil),
+          .init(value: 7.1, decimalSeperator: nil),
+          .init(value: 8.0, decimalSeperator: nil),
+          .init(value: 9.0, decimalSeperator: nil),
+          .init(value: 10.0, decimalSeperator: nil),
+          .init(value: 11.0, decimalSeperator: nil)
+        ]
+      )
+      expectation.fulfill()
     }
     
-    func testSetFunction() {
-        
-        let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
-        packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.performSetFunction
-        camera.setupDummyDeviceInfo()
-        camera.ptpIPClient = PTPIPClient(
-            camera: camera,
-            packetStream: packetStream
-        )
-        camera.ptpIPClient?.deviceName = "iPhone Xs Max"
-        
-        let expectation = XCTestExpectation(description: "Get supports")
-        
-        let aperture = Aperture.Value(value: 2.8, decimalSeperator: nil)
-        camera.performFunction(Aperture.set, payload: aperture) { (error, _) in
-            
-            XCTAssertNil(error)
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 10)
-                        
-        XCTAssertEqual(
-            packetStream.packetsSentAndReceived,
-            packetStream.testFlow.packetsSentAndReceived
-        )
+    wait(for: [expectation], timeout: 10)
+    
+    XCTAssertEqual(
+      packetStream.packetsSentAndReceived,
+      packetStream.testFlow.packetsSentAndReceived
+    )
+  }
+  
+  func testAvailableFunctions() {
+    
+    let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
+    packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.functionAvailability
+    camera.setupDummyDeviceInfo()
+    camera.ptpIPClient = PTPIPClient(
+      camera: camera,
+      packetStream: packetStream
+    )
+    camera.ptpIPClient?.deviceName = "iPhone Xs Max"
+    
+    let expectation = XCTestExpectation(description: "Get supports")
+    
+    camera.isFunctionAvailable(Aperture.set) { (available, error, supportedValues) in
+      
+      XCTAssertEqual(available, true)
+      XCTAssertNil(error)
+      XCTAssertNotNil(supportedValues)
+      XCTAssertEqual(
+        supportedValues,
+        [
+          .init(value: 2.8, decimalSeperator: nil),
+          .init(value: 3.2, decimalSeperator: nil),
+          .init(value: 3.5, decimalSeperator: nil),
+          .init(value: 4.0, decimalSeperator: nil),
+          .init(value: 4.5, decimalSeperator: nil),
+          .init(value: 5.0, decimalSeperator: nil),
+          .init(value: 5.6, decimalSeperator: nil),
+          .init(value: 6.3, decimalSeperator: nil),
+          .init(value: 7.1, decimalSeperator: nil),
+          .init(value: 8.0, decimalSeperator: nil),
+          .init(value: 9.0, decimalSeperator: nil),
+          .init(value: 10.0, decimalSeperator: nil),
+          .init(value: 11.0, decimalSeperator: nil)
+        ]
+      )
+      expectation.fulfill()
     }
+    
+    wait(for: [expectation], timeout: 10)
+    
+    XCTAssertEqual(
+      packetStream.packetsSentAndReceived,
+      packetStream.testFlow.packetsSentAndReceived
+    )
+  }
+  
+  func testGetFunction() {
+    
+    let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
+    packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.performGetFunction
+    camera.setupDummyDeviceInfo()
+    camera.ptpIPClient = PTPIPClient(
+      camera: camera,
+      packetStream: packetStream
+    )
+    camera.ptpIPClient?.deviceName = "iPhone Xs Max"
+    
+    let expectation = XCTestExpectation(description: "Get supports")
+    
+    camera.performFunction(Aperture.get, payload: nil) { (error, value) in
+      
+      XCTAssertNil(error)
+      XCTAssertNotNil(value)
+      XCTAssertEqual(
+        value,
+        .init(value: 2.8, decimalSeperator: nil)
+      )
+      expectation.fulfill()
+    }
+    
+    wait(for: [expectation], timeout: 10)
+    
+    XCTAssertEqual(
+      packetStream.packetsSentAndReceived,
+      packetStream.testFlow.packetsSentAndReceived
+    )
+  }
+  
+  func testSetFunction() {
+    
+    let packetStream = TestPTPPacketStream(camera: camera, port: 0)!
+    packetStream.testFlow = TestPTPPacketStream.TestFlow.Sony.performSetFunction
+    camera.setupDummyDeviceInfo()
+    camera.ptpIPClient = PTPIPClient(
+      camera: camera,
+      packetStream: packetStream
+    )
+    camera.ptpIPClient?.deviceName = "iPhone Xs Max"
+    
+    let expectation = XCTestExpectation(description: "Get supports")
+    
+    let aperture = Aperture.Value(value: 2.8, decimalSeperator: nil)
+    camera.performFunction(Aperture.set, payload: aperture) { (error, _) in
+      
+      XCTAssertNil(error)
+      expectation.fulfill()
+    }
+    
+    wait(for: [expectation], timeout: 10)
+    
+    XCTAssertEqual(
+      packetStream.packetsSentAndReceived,
+      packetStream.testFlow.packetsSentAndReceived
+    )
+  }
 }
