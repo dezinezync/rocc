@@ -9,8 +9,8 @@
 import Foundation
 
 
-typealias WorkBlockCompletion = (_ isRetriable: Bool) -> Bool
-typealias WorkBlock = (_ anotherAttemptMaybeSuccessful: @escaping WorkBlockCompletion, _ attemptNumber: Int) -> Void
+typealias WorkBlockCompletion = @Sendable (_ isRetriable: Bool) -> Bool
+typealias WorkBlock = @Sendable (_ anotherAttemptMaybeSuccessful: @escaping WorkBlockCompletion, _ attemptNumber: Int) -> Void
 
 
 func retry(work: @escaping WorkBlock, attempts: Int, attempt: Int = 1) {

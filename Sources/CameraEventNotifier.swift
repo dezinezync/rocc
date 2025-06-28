@@ -30,7 +30,7 @@ public protocol CameraEventNotifierDelegate {
 ///
 /// This class will be entirely responsible for fetching up-to-date events from the camera and providing
 /// them back to the callee through a delegate based (Or NotificationCenter if you wish) approach
-public final class CameraEventNotifier {
+public final class CameraEventNotifier: @unchecked Sendable {
     
     private let log = OSLog(subsystem: "com.yellow-brick-bear.rocc", category: "CameraEventNotifier")
     

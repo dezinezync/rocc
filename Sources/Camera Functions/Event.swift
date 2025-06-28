@@ -50,7 +50,7 @@ public enum FocusStatus {
 
 /// CameraEvent represents an overview of the camera's current setup.
 /// An event can either be a whole snapshot - in-which we expect all the parameters to be set - or an update to certain parameters, for example if the camera's ISO was set on the body; in which case only that parameter would be non-nil.
-public struct CameraEvent: Equatable {
+public struct CameraEvent: Equatable, @unchecked Sendable {
     
     static public func ==(lhs: CameraEvent, rhs: CameraEvent) -> Bool {
         // No two events are identical, this is mostly just for camera function conformance

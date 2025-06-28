@@ -21,8 +21,7 @@ import Foundation
 /// - highFrameRate: A mode on certain cameras to record a quick burst of slo-motion video
 /// - singleBracket: Capture a single bracket of photos
 /// - continuousBracket: Capture a continuous bracket of photos
-public enum ShootingMode: String, CaseIterable {
-    
+public enum ShootingMode: String, CaseIterable, Sendable {    
     case audio
     case bulb
     case photo

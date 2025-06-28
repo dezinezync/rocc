@@ -11,7 +11,7 @@ import os.log
 
 extension SonyPTPIPDevice {
     
-    func performFunction<T>(_ function: T, payload: T.SendType?, callback: @escaping ((Error?, T.ReturnType?) -> Void)) where T : CameraFunction {
+    func performFunction<T>(_ function: T, payload: T.SendType?, callback: @escaping (@Sendable (Error?, T.ReturnType?) -> Void)) where T : CameraFunction {
         
         switch function.function {
         case .getEvent:
@@ -481,7 +481,7 @@ extension SonyPTPIPDevice {
                     
                     self.performFunction(
                         LiveView.QualitySet.set,
-                        payload: quality) { (_, _) in
+                        payload: quality) { [url] (_, _) in
                         callback(nil, url as? T.ReturnType)
                     }
                     

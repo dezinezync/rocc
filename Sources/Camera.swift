@@ -86,9 +86,9 @@ public enum PollingMode {
 /// A protocol which defines the base functionality of a camera.
 public protocol Camera: NSObjectProtocol {
     
-    typealias ConnectedCompletion = (_ error: Error?, _ transferMode: Bool) -> Void
+    typealias ConnectedCompletion = @Sendable (_ error: Error?, _ transferMode: Bool) -> Void
     
-    typealias DisconnectedCompletion = (_ error: Error?) -> Void
+    typealias DisconnectedCompletion = @Sendable (_ error: Error?) -> Void
     
     /// The IP address of the camera
     var ipAddress: sockaddr_in? { get }
@@ -182,7 +182,7 @@ public protocol Camera: NSObjectProtocol {
     /// - Parameters:
     ///   - function: The function to attempt to make available via the API.
     ///   - callback: A closure called with whether the function was enabled or not.
-    func makeFunctionAvailable<T: CameraFunction>(_ function: T, callback: @escaping ((_ error: Error?) -> Void))
+    func makeFunctionAvailable<T: CameraFunction>(_ function: T, callback: @escaping (@Sendable (_ error: Error?) -> Void))
     
     /// Performs a given function by communicating with the camera.
     ///
@@ -190,18 +190,18 @@ public protocol Camera: NSObjectProtocol {
     ///   - function: The function to perform.
     ///   - payload: The payload to send with the performed function.
     ///   - callback: A callback called when the function was performed.
-    func performFunction<T: CameraFunction>(_ function: T, payload: T.SendType?, callback: @escaping ((_ error: Error?, _ value: T.ReturnType?) -> Void))
+    func performFunction<T: CameraFunction>(_ function: T, payload: T.SendType?, callback: @escaping (@Sendable (_ error: Error?, _ value: T.ReturnType?) -> Void))
     
     /// Loads the files to transfer!
     ///
     /// - Parameters:
     ///   - callback: A closure called once the files have been loaded
-    func loadFilesToTransfer(callback: @escaping ((_ error: Error?, _ files: [File]?) -> Void))
+    func loadFilesToTransfer(callback: @escaping (@Sendable (_ error: Error?, _ files: [File]?) -> Void))
     
     /// Finishes automatic transfer initiated by loadFilesToTransfer
     ///
     /// - Parameter callback: A closure called once the transfer has finished
-    func finishTransfer(callback: @escaping ((_ error: Error?) -> Void))
+    func finishTransfer(callback: @escaping (@Sendable (_ error: Error?) -> Void))
     
     /// Passes an event from a `CameraEventNotifier` to the camera it's notifying
     ///

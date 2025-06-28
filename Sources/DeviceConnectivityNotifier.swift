@@ -32,7 +32,7 @@ public protocol DeviceConnectivityNotifierDelegate {
 ///
 /// This class will be entirely responsible for fetching up-to-date events from the camera and providing
 /// them back to the callee through a delegate based (Or NotificationCenter if you wish) approach
-public final class DeviceConnectivityNotifier {
+public final class DeviceConnectivityNotifier: @unchecked Sendable {
     
     private let logger: OSLog = {
        return OSLog(subsystem: "Rocc", category: "DeviceConnectivity")

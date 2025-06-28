@@ -9,7 +9,7 @@
 import Foundation
 import os.log
 
-internal final class SonyPTPIPDevice: SonyCamera {
+internal final class SonyPTPIPDevice: SonyCamera, @unchecked Sendable {
     
     let log = OSLog(subsystem: "com.yellow-brick-bear.rocc", category: "SonyPTPIPCamera")
     
@@ -526,7 +526,7 @@ extension SonyPTPIPDevice: Camera {
         completion(nil)
     }
     
-    func makeFunctionAvailable<T>(_ function: T, callback: @escaping ((Error?) -> Void)) where T : CameraFunction {
+    func makeFunctionAvailable<T>(_ function: T, callback: @escaping (@Sendable (Error?) -> Void)) where T : CameraFunction {
         
         switch function.function {
         case .startContinuousShooting:
@@ -722,7 +722,7 @@ extension SonyPTPIPDevice: Camera {
         return modes
     }
     
-    private func setToExposureProgrammgeModeIfRequired(for shootMode: ShootingMode, _ completion: @escaping ((Error?) -> Void)) {
+    private func setToExposureProgrammgeModeIfRequired(for shootMode: ShootingMode, _ completion: @escaping (@Sendable (Error?) -> Void)) {
         
         guard let exposureProgrammeModes = self.bestExposureProgrammeModes(for: shootMode, currentExposureProgrammeMode: self.lastEvent?.exposureMode?.current), let firstMode = exposureProgrammeModes.first else {
             completion(nil)
@@ -748,7 +748,7 @@ extension SonyPTPIPDevice: Camera {
         }
     }
     
-    private func setToShootModeIfRequired(_ shootMode: ShootingMode, _ completion: @escaping ((Error?) -> Void)) {
+    private func setToShootModeIfRequired(_ shootMode: ShootingMode, _ completion: @escaping (@Sendable (Error?) -> Void)) {
         
         // Last shoot mode should be up to date so do a quick check if we're already in the correct shoot mode
         guard lastEvent?.shootMode?.current != shootMode else {
@@ -770,7 +770,7 @@ extension SonyPTPIPDevice: Camera {
         }
     }
     
-    func setExposureProgrammeMode(_ mode: Exposure.Mode.Value, _ completion: @escaping ((Error?) -> Void)) {
+    func setExposureProgrammeMode(_ mode: Exposure.Mode.Value, _ completion: @escaping (@Sendable (Error?) -> Void)) {
         
         ptpIPClient?.sendSetControlDeviceAValue(
             PTP.DeviceProperty.Value(
@@ -784,7 +784,7 @@ extension SonyPTPIPDevice: Camera {
         )
     }
     
-    func setStillCaptureMode(_ mode: SonyStillCaptureMode, _ completion: @escaping ((Error?) -> Void)) {
+    func setStillCaptureMode(_ mode: SonyStillCaptureMode, _ completion: @escaping (@Sendable (Error?) -> Void)) {
         
         ptpIPClient?.sendSetControlDeviceAValue(
             PTP.DeviceProperty.Value(
@@ -798,7 +798,7 @@ extension SonyPTPIPDevice: Camera {
         )
     }
     
-    private func setShutterSpeedAwayFromBulbIfRequired(_ callback: @escaping ((Error?) -> Void)) {
+    private func setShutterSpeedAwayFromBulbIfRequired(_ callback: @escaping (@Sendable (Error?) -> Void)) {
         
         // We need to do this otherwise the camera can get stuck in continuous shooting mode!
         // If the shutter speed is BULB then we need to set it to something else!
